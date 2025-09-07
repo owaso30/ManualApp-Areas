@@ -1,0 +1,13 @@
+@page
+@model ExternalLoginModel
+@{
+    ViewData["Title"] = "外部ログイン";
+}
+
+<div class="text-center">
+    <h1>@ViewData["Title"]</h1>
+    <p class="text-info">
+        <i class="fas fa-info-circle"></i>
+        <strong>@Model.ProviderDisplayName</strong>での認証が完了しました。
+    </p>
+</div>

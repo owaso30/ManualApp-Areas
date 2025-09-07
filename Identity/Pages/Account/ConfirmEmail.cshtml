@@ -1,0 +1,30 @@
+@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "メール認証";
+}
+
+<div class="text-center">
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+    
+    @if (Model.StatusMessage != null && Model.StatusMessage.Contains("失敗"))
+    {
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+            <h4>メール認証に失敗しました</h4>
+            <p class="mb-0">認証リンクが無効または期限切れの可能性があります。</p>
+        </div>
+        <div class="mt-4">
+            <a href="/Identity/Account/Register" class="btn btn-outline-primary">新規登録</a>
+            <a href="/Identity/Account/Login" class="btn btn-primary">ログイン</a>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-spinner fa-spin fa-3x mb-3"></i>
+            <h4>メールアドレスを認証中...</h4>
+            <p class="mb-0">しばらくお待ちください。</p>
+        </div>
+    }
+</div>

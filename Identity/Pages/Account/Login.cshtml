@@ -1,0 +1,76 @@
+@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "ログイン";
+}
+
+<div>
+                    <form id="account" method="post">
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger mb-3" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>エラーが発生しました</strong>
+                                <div asp-validation-summary="All" class="text-danger mt-2"></div>
+                            </div>
+                        }
+                        
+                        <div class="mb-3">
+                            <label asp-for="Input.Email" class="form-label">メールアドレス</label>
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="example@email.com" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Input.Password" class="form-label">パスワード</label>
+                            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="パスワード" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            <label class="form-check-label" asp-for="Input.RememberMe">
+                                ログイン状態を保持する
+                            </label>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button id="login-submit" type="submit" class="btn btn-primary btn-lg">ログイン</button>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <a asp-page="./ForgotPassword" class="text-decoration-none">
+                                <i class="fas fa-key me-1"></i>パスワードを忘れた場合
+                            </a>
+                        </div>
+                    </form>
+                    
+                    <hr class="my-4">
+                    
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) > 0)
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                <div class="d-grid">
+                                    @foreach (var provider in Model.ExternalLogins!)
+                                    {
+                                        <button type="submit" class="btn btn-outline-primary mb-2" name="provider" value="@provider.Name">
+                                            <i class="fab fa-google"></i> Googleでログイン
+                                        </button>
+                                    }
+                                </div>
+                            </form>
+                        }
+                    }
+                    
+                    <div class="text-center mt-3">
+                        <p class="mb-1">
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none">新規登録はこちら</a>
+                        </p>
+                    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
